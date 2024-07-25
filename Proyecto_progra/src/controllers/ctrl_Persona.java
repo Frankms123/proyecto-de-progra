@@ -13,10 +13,9 @@ import models.mdl_Persona;
 public class ctrl_Persona {
     // Create the connection variables
     conex_MSSQL conex = new conex_MSSQL();
-   // conex_MySQL conex = new conex_MySQL();
 
-    //private String motor = "MSSQL";
-    private String motor = "MySQL";
+    private String motor = "MSSQL";
+    //private String motor = "MySQL";
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
 
