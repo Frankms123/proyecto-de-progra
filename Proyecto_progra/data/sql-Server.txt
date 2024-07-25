@@ -1,0 +1,63 @@
+-- Locate into master database
+use master;
+go
+
+-- Create new database
+create database db_ejemplo
+   on  primary (name='db_ejemplo', filename='/var/opt/mssql/data/db_ejemplo.mdf'     , size=100mb , maxsize=250mb , filegrowth = 25mb )
+   log on (name='db_ejemplo_log' , filename='/var/opt/mssql/data/db_ejemplo_log.ldf' , size=100mb , maxsize=250mb , filegrowth = 25mb );
+go
+
+-- Locate into database
+use db_ejemplo;
+go
+
+-- Create new table
+create table tb_ejemplo(
+   id int identity(1,1) primary key,
+   cedula int unique not null,
+   nombre varchar(15),
+   apell1 varchar(15),
+   apell2 varchar(15),
+   fechanac date
+);
+
+-- Create store procedure to insert data
+create procedure ins_Ejemplo
+   @ced int,
+   @nom varchar(15),
+   @ap1 varchar(15),
+   @ap2 varchar(15),
+   @nac date
+as
+begin
+	insert into tb_ejemplo(cedula, nombre, apell1, apell2, fechanac)
+	values(@ced,@nom,@ap1,@ap2,@nac);
+end;
+
+-- Create store procedure to update a record
+create procedure upd_Ejemplo
+   @id  int,
+   @ced int,
+   @nom varchar(15),
+   @ap1 varchar(15),
+   @ap2 varchar(15),
+   @nac date
+as
+begin
+	update tb_ejemplo
+	set cedula   = @ced,
+	    nombre   = @nom,
+	    apell1   = @ap1,
+		apell2   = @ap2,
+		fechanac = @nac
+	where id = @id;
+end;
+
+-- Create store procedure to delete a record
+create procedure del_Ejemplo
+   @id  int
+as
+begin
+	delete from tb_ejemplo where id = @id;
+end;
